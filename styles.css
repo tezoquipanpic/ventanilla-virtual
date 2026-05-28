@@ -173,10 +173,12 @@ nav ul li a:hover {
     margin-bottom: 1rem;
 }
 
-.card h3 {
-    font-size: 1.25rem;
-    color: #1e293b;
-    margin-bottom: 0.75rem;
+.card-icon {
+    font-size: 2.6rem;         /* Tamaño ideal para fuentes tipográficas de iconos */
+    color: #1e40af;            /* Azul institucional vibrante */
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
 }
 
 .card p {
