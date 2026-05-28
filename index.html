@@ -42,39 +42,78 @@
     </section>
 
     <main id="tramites" class="services-section">
-        <h2>Trámites y Servicios Disponibles</h2>
+        <h2>Trámites y Certificaciones Oficiales</h2>
         <div class="services-grid">
             
             <div class="card">
                 <div class="card-icon"><i class="bi bi-house-gear-fill"></i></div>
                 <h3>Constancia Domiciliaria</h3>
                 <p>Documento oficial que acredita tu residencia efectiva, domicilio y vecindad en la delegación de Miraflores para trámites legales, administrativos o escolares.</p>
-                <button class="btn-secondary btn-tramite" data-id="domiciliaria">Iniciar trámite</button>
+                <button class="btn-secondary btn-accion" data-id="domiciliaria">Iniciar trámite</button>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="bi bi-person-badge-fill"></i></div>
                 <h3>Constancia de Identidad</h3>
                 <p>Certificación oficial que avala la identidad y rasgos físicos del solicitante, indispensable para personas que no cuentan con una identificación oficial vigente.</p>
-                <button class="btn-secondary btn-tramite" data-id="identidad">Iniciar trámite</button>
+                <button class="btn-secondary btn-accion" data-id="identidad">Iniciar trámite</button>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="bi bi-water"></i></div>
                 <h3>Conexión de Agua y Drenaje</h3>
                 <p>Autorización delegacional para realizar de forma segura la infraestructura de conexión de tu predio particular a la red pública de agua potable y drenaje sanitario.</p>
-                <button class="btn-secondary btn-tramite" data-id="drenaje">Iniciar trámite</button>
+                <button class="btn-secondary btn-accion" data-id="drenaje">Iniciar trámite</button>
             </div>
 
             <div class="card">
                 <div class="card-icon"><i class="bi bi-flower1"></i></div>
                 <h3>Inhumación y Panteones</h3>
                 <p>Gestión y expedición de órdenes de sepelio en el panteón de la comunidad, asignación de fosas, trámites de exhumación y refrendos de derechos de perpetuidad.</p>
-                <button class="btn-secondary btn-tramite" data-id="inhumacion">Iniciar trámite</button>
+                <button class="btn-secondary btn-accion" data-id="inhumacion">Iniciar trámite</button>
             </div>
 
         </div>
     </main>
+
+    <section id="reportes" class="reports-section">
+        <div class="section-container">
+            <h2>Atención Ciudadana: Reporte de Servicios Públicos</h2>
+            <p class="section-subtitle">Levanta una incidencia de forma directa para la pronta intervención de las cuadrillas de servicios de la delegación.</p>
+            
+            <div class="services-grid">
+                
+                <div class="card report-card">
+                    <div class="card-icon"><i class="bi bi-cone-striped" style="color: #ea580c;"></i></div>
+                    <h3>Baches y Carpetas Asfálticas</h3>
+                    <p>Reporta baches, hundimientos, zanjas abiertas o imperfecciones críticas en las vialidades públicas y calles internas de la delegación.</p>
+                    <button class="btn-secondary btn-accion" data-id="baches">Reportar Falla</button>
+                </div>
+
+                <div class="card report-card">
+                    <div class="card-icon"><i class="bi bi-lightbulb-off-fill" style="color: #eab308;"></i></div>
+                    <h3>Fallas en Alumbrado Público</h3>
+                    <p>Reporta luminarias apagadas de noche, focos parpadeantes o sectores oscuros que comprometan la seguridad de las calles de la comunidad.</p>
+                    <button class="btn-secondary btn-accion" data-id="luminarias">Reportar Falla</button>
+                </div>
+
+                <div class="card report-card">
+                    <div class="card-icon"><i class="bi bi-trash3-fill" style="color: #16a34a;"></i></div>
+                    <h3>Recolección de Residuos</h3>
+                    <p>Informa sobre irregularidades o ausencia en las rutas de los camiones recolectores de basura, o acumulación indebida en espacios públicos.</p>
+                    <button class="btn-secondary btn-accion" data-id="basura">Reportar Falla</button>
+                </div>
+
+                <div class="card report-card">
+                    <div class="card-icon"><i class="bi bi-droplet-half" style="color: #2563eb;"></i></div>
+                    <h3>Fugas de Agua o Drenaje Tapado</h3>
+                    <p>Reporte urgente de desperdicio de agua potable en vía pública, rupturas de tuberías de toma de red o desbordamiento de aguas negras.</p>
+                    <button class="btn-secondary btn-accion" data-id="fugas">Reportar Falla</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <div id="modalTramite" class="modal-overlay">
         <div class="modal-window">
@@ -99,13 +138,13 @@
 
             <div id="viewForm" class="modal-view">
                 <div class="modal-header">
-                    <h2>Formulario de Solicitud Digital</h2>
+                    <h2 id="formTitleText">Formulario de Solicitud Digital</h2>
                     <p style="font-size: 0.85rem; color: #64748b;" id="formSubtitle">Trámite</p>
                 </div>
                 <form id="tramiteForm">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="formNombre">Nombre Completo del Solicitante *</label>
+                            <label for="formNombre">Nombre Completo del Ciudadano *</label>
                             <input type="text" id="formNombre" required placeholder="Ej. Juan Pérez López">
                         </div>
                         
@@ -122,24 +161,24 @@
 
                         <div id="dynamicFields"></div>
 
-                        <h3 class="form-section-title"><i class="bi bi-camera-fill"></i> Adjuntar Documentación (Fotos o PDF)</h3>
+                        <h3 class="form-section-title" id="uploadTitleText"><i class="bi bi-camera-fill"></i> Adjuntar Documentación</h3>
                         <div id="fileUploadFields"></div>
                     </div>
                     <div class="modal-footer" style="gap: 1rem;">
                         <button type="button" class="btn-secondary" id="btnBackToReq" style="width: auto;">Regresar</button>
-                        <button type="submit" class="btn-primary">Enviar Solicitud <i class="bi bi-send-fill"></i></button>
+                        <button type="submit" class="btn-primary">Enviar Reporte <i class="bi bi-send-fill"></i></button>
                     </div>
                 </form>
             </div>
 
             <div id="viewSuccess" class="modal-view text-center" style="padding: 1.5rem 0;">
                 <i class="bi bi-check-circle-fill" style="font-size: 4rem; color: #10b981;"></i>
-                <h2 style="color: #1e3a8a; margin-top: 1rem;">¡Solicitud Recibida!</h2>
-                <p style="color: #475569; margin-top: 0.5rem; font-size: 0.95rem;">Tu documentación ha sido enviada digitalmente a la delegación de Miraflores. Conserva tu número de folio oficial para el seguimiento de tu trámite:</p>
+                <h2 style="color: #1e3a8a; margin-top: 1rem;">¡Registro Exitoso!</h2>
+                <p style="color: #475569; margin-top: 0.5rem; font-size: 0.95rem;" id="successMessageText">Tu solicitud ha sido enviada digitalmente a la delegación de Miraflores. Conserva tu número de folio oficial para el seguimiento de tu trámite:</p>
                 
                 <div class="folio-box" id="lblFolio">MIRA-2026-XXXX</div>
                 
-                <p style="font-size: 0.85rem; color: #64748b;"><i class="bi bi-info-circle"></i> Se te notificará vía correo o teléfono cuando tus documentos físicos estén listos para firma y recolección.</p>
+                <p style="font-size: 0.85rem; color: #64748b;"><i class="bi bi-info-circle"></i> Se le dará un seguimiento inmediato y las cuadrillas correspondientes se asignarán a la brevedad.</p>
                 <button type="button" class="btn-primary" id="btnFinish" style="margin-top: 1.5rem;">Finalizar</button>
             </div>
 
@@ -154,8 +193,11 @@
     </footer>
 
     <script>
-        const infoTramites = {
+        // BASE DE DATOS MAESTRA: TRÁMITES Y REPORTES
+        const configVentanilla = {
+            // --- TRÁMITES ---
             domiciliaria: {
+                tipo: "tramite",
                 titulo: "Requisitos: Constancia Domiciliaria",
                 requisitos: [
                     "INE de quien la solicita.", 
@@ -169,6 +211,7 @@
                 archivosRequeridos: ["INE del Solicitante", "Comprobante Domiciliario Vigente"]
             },
             identidad: {
+                tipo: "tramite",
                 titulo: "Requisitos: Constancia de Identidad",
                 requisitos: [
                     "INE de quien solicita.", 
@@ -181,6 +224,7 @@
                 archivosRequeridos: ["INE del Tutor/Solicitante", "Comprobante Domiciliario", "Acta de Nacimiento del Menor", "CURP del Menor"]
             },
             drenaje: {
+                tipo: "tramite",
                 titulo: "Requisitos: Conexión de drenaje",
                 requisitos: [
                     "INE de la persona que lo solicita."
@@ -189,24 +233,65 @@
                 archivosRequeridos: ["INE de la Persona Solicitante"]
             },
             inhumacion: {
+                tipo: "tramite",
                 titulo: "Requisitos: Permiso de Inhumación y Panteones",
                 requisitos: [
                     "INE de la persona que falleció.", 
                     "INE de la persona que solicita el permiso.", 
                     "Acta de defunción expedida por el municipio de Chalco.", 
-                    "Acta de defunción que expide el médico o institution de salud que atendió a la persona." 
+                    "Acta de defunción que expide el médico o institución de salud que atendió a la persona." 
                 ],
                 camposExtras: [],
                 archivosRequeridos: ["INE del Fallecido", "INE del Solicitante", "Acta de Defunción (Municipio de Chalco)", "Acta de Defunción (Médica/Institución)"]
+            },
+            // --- ATENCIÓN CIUDADANA (REPORTES) ---
+            baches: {
+                tipo: "reporte",
+                titulo: "Atención Ciudadana: Reporte de Baches",
+                camposExtras: [
+                    { id: "repCalle", label: "Ubicación o calle exacta del bache (y referencias) *", type: "text", placeholder: "Ej. Calle Clavel, entre Av. Miraflores y Benito Juárez", required: true },
+                    { id: "repDetalles", label: "Descripción o afectación vial del bache *", type: "text", placeholder: "Ej. Bache profundo a mitad de calle que abarca medio carril", required: true }
+                ],
+                archivosRequeridos: ["Fotografía clara del bache (Evidencia)"]
+            },
+            luminarias: {
+                tipo: "reporte",
+                titulo: "Atención Ciudadana: Luminarias Defuctuosas",
+                camposExtras: [
+                    { id: "repPoste", label: "Dirección de la luminaria y número de poste (si cuenta con él) *", type: "text", placeholder: "Ej. Calle Aquiles Serdán, frente a la tienda de abarrotes, poste #4", required: true },
+                    { id: "repFalla", label: "Tipo de falla en la luminaria *", type: "text", placeholder: "Ej. Totalmente apagada por las noches / Parpadea constantemente", required: true }
+                ],
+                archivosRequeridos: ["Fotografía de la luminaria o zona a oscuras"]
+            },
+            basura: {
+                tipo: "reporte",
+                titulo: "Atención Ciudadana: Reporte de Recolección de Basura",
+                camposExtras: [
+                    { id: "repZona", label: "Barrio, calle o sección afectada por el servicio *", type: "text", placeholder: "Ej. Cerrada San Juan, carros recolectores no han pasado", required: true },
+                    { id: "repDias", label: "¿Cuántos días acumulados lleva sin pasar el camión? *", type: "number", placeholder: "Ej. 4", required: true }
+                ],
+                archivosRequeridos: ["Fotografía del acumulamiento o basura acumulada"]
+            },
+            fugas: {
+                tipo: "reporte",
+                titulo: "Atención Ciudadana: Reporte de Fuga de Agua o Alcantarillado",
+                camposExtras: [
+                    { id: "repFugaLoc", label: "Ubicación exacta de la fuga de agua o drenaje tapado *", type: "text", placeholder: "Ej. Banqueta exterior del Centro de Salud de Miraflores", required: true },
+                    { id: "repGravedad", label: "Detalle o severidad de la fuga *", type: "text", placeholder: "Ej. Brote fuerte de agua limpia potable / Drenaje tapado provocando encharcamiento", required: true }
+                ],
+                archivosRequeridos: ["Fotografía de la fuga de agua o desperdicio"]
             }
         };
 
-        let currentTramiteId = "";
+        let currentId = "";
 
+        // Elementos UI
         const modal = document.getElementById('modalTramite');
         const modalTitle = document.getElementById('modalTitle');
         const modalRequirements = document.getElementById('modalRequirements');
+        const formTitleText = document.getElementById('formTitleText');
         const formSubtitle = document.getElementById('formSubtitle');
+        const uploadTitleText = document.getElementById('uploadTitleText');
         const dynamicFields = document.getElementById('dynamicFields');
         const fileUploadFields = document.getElementById('fileUploadFields');
         const tramiteForm = document.getElementById('tramiteForm');
@@ -225,35 +310,57 @@
             targetView.classList.add('active');
         }
 
-        // 1. CONTROL DE APERTURA DEL MODAL
-        document.querySelectorAll('.btn-tramite').forEach(button => {
+        // CONTROLADOR DE CLIC GENERAL PARA TRÁMITES Y REPORTES
+        document.querySelectorAll('.btn-accion').forEach(button => {
             button.addEventListener('click', () => {
-                currentTramiteId = button.getAttribute('data-id');
-                const datos = infoTramites[currentTramiteId];
+                currentId = button.getAttribute('data-id');
+                const datos = configVentanilla[currentId];
 
                 if (datos) {
-                    modalTitle.innerText = datos.titulo;
-                    formSubtitle.innerText = "Modalidad: " + datos.titulo;
-                    
-                    modalRequirements.innerHTML = "";
-                    datos.requisitos.forEach(req => {
-                        const li = document.createElement('li');
-                        li.innerText = req;
-                        modalRequirements.appendChild(li);
-                    });
-
                     tramiteForm.reset();
-                    switchView(viewReq);
+                    
+                    if (datos.tipo === "tramite") {
+                        // Flujo Trámite: Mostrar requisitos primero (Vista 1)
+                        modalTitle.innerText = datos.titulo;
+                        formTitleText.innerText = "Formulario de Solicitud Digital";
+                        formSubtitle.innerText = "Modalidad: " + datos.titulo;
+                        uploadTitleText.innerHTML = '<i class="bi bi-camera-fill"></i> Adjuntar Documentación (Fotos o PDF)';
+                        btnBackToReq.style.display = "inline-block"; // Mostrar botón regresar
+                        
+                        modalRequirements.innerHTML = "";
+                        datos.requisitos.forEach(req => {
+                            const li = document.createElement('li');
+                            li.innerText = req;
+                            modalRequirements.appendChild(li);
+                        });
+                        
+                        switchView(viewReq);
+                    } else {
+                        // Flujo Reporte: Saltar directo al Formulario (Vista 2)
+                        formTitleText.innerText = "Reporte Ciudadano Digital";
+                        formSubtitle.innerText = "Categoría: " + datos.titulo;
+                        uploadTitleText.innerHTML = '<i class="bi bi-exclamation-triangle-fill" style="color: #ea580c;"></i> Evidencia Fotográfica Obligatoria';
+                        btnBackToReq.style.display = "none"; // Ocultar regresar porque no hay vista previa
+                        
+                        armarFormularioDinamico(datos);
+                        switchView(viewForm);
+                    }
                     modal.classList.add('show');
                 }
             });
         });
 
-        // 2. PASAR A LA VISTA 2 (FORMULARIO DINÁMICO)
+        // NAVEGACIÓN A FORMULARIO EN CASO DE TRÁMITES
         btnGoToForm.addEventListener('click', () => {
-            const datos = infoTramites[currentTramiteId];
-            if (!datos) return;
+            const datos = configVentanilla[currentId];
+            if (datos) {
+                armarFormularioDinamico(datos);
+                switchView(viewForm);
+            }
+        });
 
+        // GENERADOR INTERACTIVO DE CAMPOS
+        function armarFormularioDinamico(datos) {
             dynamicFields.innerHTML = "";
             datos.camposExtras.forEach(campo => {
                 const div = document.createElement('div');
@@ -275,26 +382,25 @@
                 `;
                 fileUploadFields.appendChild(div);
             });
-
-            switchView(viewForm);
-        });
+        }
 
         btnBackToReq.addEventListener('click', () => switchView(viewReq));
 
-        // 3. ENVÍO REAL HACIA GOOGLE SHEETS
+        // TRANSMISIÓN HACIA GOOGLE SHEETS
         tramiteForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            const datosConfig = configVentanilla[currentId];
             const submitBtn = tramiteForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="bi bi-hourglass-split animate-spin"></i> Procesando expediente...';
+            
+            submitBtn.innerHTML = '<i class="bi bi-hourglass-split animate-spin"></i> Procesando reporte...';
             submitBtn.disabled = true;
 
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const folio = `MIRA-2026-${randomNum}`;
 
             let detallesExtras = "";
-            const datosConfig = infoTramites[currentTramiteId];
             datosConfig.camposExtras.forEach(campo => {
                 const inputVal = document.getElementById(campo.id).value;
                 detallesExtras += `${campo.label} ${inputVal} | `;
@@ -318,7 +424,7 @@
             function enviarAlBackend(folio, detalles, fileName, fileData) {
                 const payload = {
                     folio: folio,
-                    tramite: infoTramites[currentTramiteId].titulo,
+                    tramite: datosConfig.titulo,
                     nombre: document.getElementById('formNombre').value,
                     telefono: document.getElementById('formTelefono').value,
                     correo: document.getElementById('formCorreo').value,
@@ -327,17 +433,23 @@
                     fileData: fileData
                 };
 
+                // URL de tu Apps Script publicada previamente
                 const GOOGLE_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwmSIiBhh6-666PiI3yanmpS8FY-d0zUhmAGd2FSNAJpRuf7d18t8CAce8U43mxDybM/exec";
 
                 fetch(GOOGLE_WEBAPP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 })
                 .then(() => {
+                    // Configurar textos de éxito basados en el tipo
+                    if (datosConfig.tipo === "tramite") {
+                        document.getElementById('successMessageText').innerText = "Tu documentación ha sido enviada digitalmente a la delegación de Miraflores. Conserva tu número de folio oficial para el seguimiento de tu trámite:";
+                    } else {
+                        document.getElementById('successMessageText').innerText = "El reporte de anomalía vial ha sido registrado con éxito en el mapa de atención de Miraflores. Las cuadrillas de obras públicas han sido notificadas con tu folio:";
+                    }
+
                     document.getElementById('lblFolio').innerText = folio;
                     switchView(viewSuccess);
                     submitBtn.innerHTML = originalBtnText;
