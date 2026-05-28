@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventanilla Virtual - Delegación Miraflores</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Encabezado Institucional -->
     <header>
         <div class="header-container">
             <div class="logo-area">
-                <!-- Aquí irá un escudo o logo institucional más adelante -->
                 <h2>Delegación Miraflores</h2>
                 <p>Municipio de Chalco</p>
             </div>
@@ -26,79 +25,70 @@
         </div>
     </header>
 
-    <!-- Sección Principal / Bienvenida -->
     <section id="inicio" class="hero">
         <div class="hero-content">
             <h1>Ventanilla Virtual de Atención Ciudadana</h1>
-            <p>Gestiona tus solicitudes, reportes y consultas de manera rápida y transparente sin salir de casa.</p>
+            <p>Gestiona tus solicitudes, reportes and consultas de manera rápida y transparente sin salir de casa.</p>
             <a href="#tramites" class="btn-primary">Ver Trámites Disponibles</a>
         </div>
     </section>
 
-    <!-- Panel de Trámites y Servicios -->
     <main id="tramites" class="services-section">
         <h2>Trámites y Servicios Disponibles</h2>
         <div class="services-grid">
             
-           <!-- Tarjeta 1: Constancia Domiciliaria -->
             <div class="card">
-                <div class="card-icon">🏠</div>
+                <div class="card-icon"><i class="bi bi-house-gear-fill"></i></div>
                 <h3>Constancia Domiciliaria</h3>
                 <p>Documento oficial que acredita tu residencia efectiva, domicilio y vecindad en la delegación de Miraflores para trámites legales, administrativos o escolares.</p>
-                <button class="btn-secondary">Iniciar trámite</button>
+                <button class="btn-secondary btn-tramite" data-id="domiciliaria">Iniciar trámite</button>
             </div>
 
-            <!-- Tarjeta 2: Constancia de Identidad -->
             <div class="card">
-                <div class="card-icon">🪪</div>
+                <div class="card-icon"><i class="bi bi-person-badge-fill"></i></div>
                 <h3>Constancia de Identidad</h3>
                 <p>Certificación oficial que avala la identidad y rasgos físicos del solicitante, indispensable para personas que no cuentan con una identificación oficial vigente.</p>
-                <button class="btn-secondary">Iniciar trámite</button>
+                <button class="btn-secondary btn-tramite" data-id="identidad">Iniciar trámite</button>
             </div>
 
-            <!-- Tarjeta 3: Permisos de Conexión de Drenaje -->
             <div class="card">
-                <div class="card-icon">🚰</div>
+                <div class="card-icon"><i class="bi bi-water"></i></div>
                 <h3>Conexión de Agua y Drenaje</h3>
                 <p>Autorización delegacional para realizar de forma segura la infraestructura de conexión de tu predio particular a la red pública de agua potable y drenaje sanitario.</p>
-                <button class="btn-secondary">Iniciar trámite</button>
-            </div>
-             <!-- Tarjeta de Ejemplo 3 -->
-            <div class="card">
-                <div class="card-icon">🪦</div>
-                <h3>Permiso de Inhumación y Panteones</h3>
-                <p>Solicitud de órdenes de sepelio en el panteón de la comunidad, registro de fosas y refrendos de perpetuidad.</p>
-                <button class="btn-secondary">Iniciar trámite</button>
+                <button class="btn-secondary btn-tramite" data-id="drenaje">Iniciar trámite</button>
             </div>
 
-             <!-- Tarjeta de Ejemplo 3 -->
             <div class="card">
-                <div class="card-icon">🛠️</div>
-                <h3>Permisos de Conexión de Drenaje</h3>
-                <p>Reporta fallas en luminarias, baches, agua potable o recolección de residuos.</p>
-                <button class="btn-secondary">Reportar</button>
-            </div>
-
-            <!-- Tarjeta de Ejemplo 5 -->
-            <div class="card">
-                <div class="card-icon">🛠️</div>
-                <h3>Reportes de Servicios Públicos</h3>
-                <p>Reporta fallas en luminarias, baches, agua potable o recolección de residuos.</p>
-                <button class="btn-secondary">Reportar</button>
-            </div>
-
-            <!-- Tarjeta de Ejemplo 6 -->
-            <div class="card">
-                <div class="card-icon">📅</div>
-                <h3>Agenda de Citas</h3>
-                <p>Programa una audiencia o reunión con las autoridades de la delegación.</p>
-                <button class="btn-secondary">Agendar</button>
+                <div class="card-icon"><i class="bi bi-flower1"></i></div>
+                <h3>Inhumación y Panteones</h3>
+                <p>Gestión y expedición de órdenes de sepelio en el panteón de la comunidad, asignación de fosas, trámites de exhumación y refrendos de derechos de perpetuidad.</p>
+                <button class="btn-secondary btn-tramite" data-id="inhumacion">Iniciar trámite</button>
             </div>
 
         </div>
     </main>
 
-    <!-- Pie de Página -->
+    <div id="modalTramite" class="modal-overlay">
+        <div class="modal-window">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">Nombre del Trámite</h2>
+            </div>
+            <div class="modal-body">
+                <h3>Requisitos obligatorios:</h3>
+                <ul id="modalRequirements">
+                    </ul>
+                <div class="download-box">
+                    <p><i class="bi bi-file-earmark-pdf-fill" style="color: #ef4444; margin-right: 5px;"></i> <strong>Formato oficial de solicitud:</strong></p>
+                    <a href="#" class="btn-download" id="btnDownloadPDF">Descargar Formato Solicitud (PDF)</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="alert('Próximamente: Aquí se habilitará el formulario digital.')">Siguiente paso</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-content">
             <p>&copy; 2026 Delegación Miraflores, Chalco. Proyecto de Vinculación Social.</p>
@@ -106,5 +96,78 @@
         </div>
     </footer>
 
+    <script>
+        const infoTramites = {
+            domiciliaria: {
+                titulo: "Requisitos: Constancia Domiciliaria",
+                requisitos: [
+                    "Identificación oficial vigente (INE) con domicilio en la comunidad (Copia).",
+                    "Comprobante de domicilio reciente (Luz, Agua o Predial no mayor a 3 meses).",
+                    "Presentar dos testigos vecinales con identificación oficial vigente.",
+                    "Fotografía tamaño infantil reciente (Fondo blanco, de frente)."
+                ]
+            },
+            identidad: {
+                titulo: "Requisitos: Constancia de Identidad",
+                requisitos: [
+                    "Copia certificada del Acta de Nacimiento (Legible).",
+                    "Comprobante de domicilio del solicitante o de un familiar directo.",
+                    "Presentar dos testigos que den fe de conocer al solicitante (con INE original y copia).",
+                    "Dos fotografías tamaño infantil (recientes, blanco y negro o color)."
+                ]
+            },
+            drenaje: {
+                titulo: "Requisitos: Conexión de Agua y Drenaje",
+                requisitos: [
+                    "Escritura pública o documento que acredite la propiedad legal del predio.",
+                    "Plano o croquis sencillo de localización de la toma solicitada.",
+                    "Copia de identificación oficial del propietario.",
+                    "Constancia de no adeudo de predial emitida por el municipio."
+                ]
+            },
+            inhumacion: {
+                titulo: "Requisitos: Permiso de Inhumación y Panteones",
+                requisitos: [
+                    "Certificado Médico de Defunción emitido por la Secretaría de Salud (Original y copia).",
+                    "Acta de defunción oficial o la orden correspondiente del Registro Civil.",
+                    "Identificación oficial del familiar responsable del trámite.",
+                    "Comprobante de pago de derechos de fosa o refrendo de perpetuidad anterior."
+                ]
+            }
+        };
+
+        const modal = document.getElementById('modalTramite');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalRequirements = document.getElementById('modalRequirements');
+        const closeBtn = document.querySelector('.close-btn');
+
+        document.querySelectorAll('.btn-tramite').forEach(button => {
+            button.addEventListener('click', () => {
+                const tramiteId = button.getAttribute('data-id');
+                const datos = infoTramites[tramiteId];
+
+                if (datos) {
+                    modalTitle.innerText = datos.titulo;
+                    modalRequirements.innerHTML = "";
+                    datos.requisitos.forEach(req => {
+                        const li = document.createElement('li');
+                        li.innerText = req;
+                        modalRequirements.appendChild(li);
+                    });
+                    modal.classList.add('show');
+                }
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
