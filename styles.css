@@ -546,3 +546,57 @@ footer p {
         gap: 0;
     }
 }
+
+/* ==========================================================================
+   SECCIÓN DE ATENCIÓN CIUDADANA Y REPORTES
+   ========================================================================== */
+
+.reports-section {
+    background-color: #f1f5f9; /* Alternancia gris claro para romper la monotonía blanca */
+    padding: 5rem 2rem;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.reports-section h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.05rem;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+}
+
+/* Tarjetas de Reportes Especializadas */
+.report-card {
+    border-color: #cbd5e1;
+    background-color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.report-card:hover {
+    border-color: #1e40af; /* Cambia a azul institucional al posar el mouse */
+    box-shadow: 0 10px 20px -5px rgba(30, 64, 175, 0.1);
+}
+
+/* Animación sutil de rotación para el icono de carga en el botón */
+.animate-spin {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
