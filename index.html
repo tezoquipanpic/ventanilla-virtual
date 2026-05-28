@@ -292,9 +292,99 @@
         // 3. REGRESAR A REQUISITOS
         btnBackToReq.addEventListener('click', () => switchView(viewReq));
 
-        // 4. PROCESAR SUBMIT (VISTA 3: ÉXITO Y FOLIO)
+        // 4. New
+        // ==========================================================================
+        // PROCESAR ENVÍO REAL HACIA GOOGLE SHEETS
+        // ==========================================================================
         tramiteForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Evita recarga
+            e.preventDefault(); // Detener recarga de página
+
+            // 1. Efecto visual de carga en el botón
+            const submitBtn = tramiteForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="bi bi-hourglass-split animate-spin"></i> Procesando expediente...';
+            submitBtn.disabled = true;
+
+            // 2. Generación del folio institucional
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const folio = `MIRA-2026-${randomNum}`;
+
+            // 3. Recopilar campos dinámicos extras en una sola cadena de texto
+            let detallesExtras = "";
+            const datosConfig = infoTramites[currentTramiteId];
+            datosConfig.camposExtras.forEach(campo => {
+                const inputVal = document.getElementById(campo.id).value;
+                detallesExtras += `${campo.label} ${inputVal} | `;
+            });
+
+            // 4. Leer la primera foto o PDF cargado por el ciudadano
+            const fileInput = document.querySelector('input[type="file"]');
+            
+            if (fileInput && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                
+                // Convertir la imagen a formato de texto Base64 para poder transmitirla
+                reader.onload = function(event) {
+                    const base64Data = event.target.result;
+                    enviarAlBackend(folio, detallesExtras, file.name, base64Data);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Enviar sin archivos si el trámite no los requiriera
+                enviarAlBackend(folio, detallesExtras, null, null);
+            }
+
+            // 5. Función de transmisión de datos por red
+            function enviarAlBackend(folio, detalles, fileName, fileData) {
+                const payload = {
+                    folio: folio,
+                    tramite: infoTramites[currentTramiteId].titulo,
+                    nombre: document.getElementById('formNombre').value,
+                    telefono: document.getElementById('formTelefono').value,
+                    correo: document.getElementById('formCorreo').value,
+                    detalles: detalles,
+                    fileName: fileName,
+                    fileData: fileData
+                };
+
+                // 🔴 REEMPLAZA ESTE TEXTO CON LA URL QUE COPIASTE EN EL PASO 2:
+                const GOOGLE_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwmSIiBhh6-666PiI3yanmpS8FY-d0zUhmAGd2FSNAJpRuf7d18t8CAce8U43mxDybM/exec";
+
+                fetch(GOOGLE_WEBAPP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Evita problemas de restricciones CORS en servidores estáticos
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(() => {
+                    // Carga exitosa: Mostrar folio oficial en la tercera vista del modal
+                    document.getElementById('lblFolio').innerText = folio;
+                    switchView(viewSuccess);
+                    
+                    // Restaurar botón
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error institucional:', error);
+                    alert('Hubo un inconveniente de conexión con la base de datos de la delegación. Intente nuevamente.');
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+            }
+        });
+
+        // 4. PROCESAR SUBMIT (VISTA 3: ÉXITO Y FOLIO)
+
+
+        
+
+        
+        //tramiteForm.addEventListener('submit', (e) => {
+        //    e.preventDefault(); // Evita recarga
 
             // Generador de folio institucional aleatorio con nomenclatura de Chalco-Miraflores
             const randomNum = Math.floor(1000 + Math.random() * 9000);
