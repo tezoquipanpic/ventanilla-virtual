@@ -154,7 +154,6 @@
     </footer>
 
     <script>
-        // REQUISITOS OFICIALES DE LA DELEGACIÓN MIRAFLORES
         const infoTramites = {
             domiciliaria: {
                 titulo: "Requisitos: Constancia Domiciliaria",
@@ -163,12 +162,10 @@
                     "Comprobante domiciliario vigente (luz, agua, teléfono, predial, contrato de compra/venta).",
                     "Mencionar cuántos años lleva viviendo en el lugar y la edad cumplida." 
                 ],
-                // Definimos qué inputs extras requiere esta opción
                 camposExtras: [
                     { id: "yearsLiving", label: "¿Cuántos años lleva viviendo en el lugar? *", type: "number", placeholder: "Ej. 15", required: true },
                     { id: "userAge", label: "Edad cumplida del solicitante *", type: "number", placeholder: "Ej. 43", required: true }
                 ],
-                // Qué archivos debe subir basados estrictamente en los requisitos que piden papel
                 archivosRequeridos: ["INE del Solicitante", "Comprobante Domiciliario Vigente"]
             },
             identidad: {
@@ -197,7 +194,7 @@
                     "INE de la persona que falleció.", 
                     "INE de la persona que solicita el permiso.", 
                     "Acta de defunción expedida por el municipio de Chalco.", 
-                    "Acta de defunción que expide el médico o institución de salud que atendió a la persona." 
+                    "Acta de defunción que expide el médico o institution de salud que atendió a la persona." 
                 ],
                 camposExtras: [],
                 archivosRequeridos: ["INE del Fallecido", "INE del Solicitante", "Acta de Defunción (Municipio de Chalco)", "Acta de Defunción (Médica/Institución)"]
@@ -206,7 +203,6 @@
 
         let currentTramiteId = "";
 
-        // Elementos de la interfaz
         const modal = document.getElementById('modalTramite');
         const modalTitle = document.getElementById('modalTitle');
         const modalRequirements = document.getElementById('modalRequirements');
@@ -215,7 +211,6 @@
         const fileUploadFields = document.getElementById('fileUploadFields');
         const tramiteForm = document.getElementById('tramiteForm');
         
-        // Elementos de Navegación de las Vistas
         const viewReq = document.getElementById('viewRequirements');
         const viewForm = document.getElementById('viewForm');
         const viewSuccess = document.getElementById('viewSuccess');
@@ -225,13 +220,12 @@
         const closeBtn = document.querySelector('.close-btn');
         const btnFinish = document.getElementById('btnFinish');
 
-        // Función para cambiar de vista de forma limpia
         function switchView(targetView) {
             document.querySelectorAll('.modal-view').forEach(v => v.classList.remove('active'));
             targetView.classList.add('active');
         }
 
-        // 1. CONTROL DE APERTURA DEL MODAL Y CARGA DE DATOS DEL PASO 1
+        // 1. CONTROL DE APERTURA DEL MODAL
         document.querySelectorAll('.btn-tramite').forEach(button => {
             button.addEventListener('click', () => {
                 currentTramiteId = button.getAttribute('data-id');
@@ -241,7 +235,6 @@
                     modalTitle.innerText = datos.titulo;
                     formSubtitle.innerText = "Modalidad: " + datos.titulo;
                     
-                    // Limpiar e inyectar requisitos oficiales
                     modalRequirements.innerHTML = "";
                     datos.requisitos.forEach(req => {
                         const li = document.createElement('li');
@@ -249,7 +242,6 @@
                         modalRequirements.appendChild(li);
                     });
 
-                    // Resetear el formulario e ir a la vista 1
                     tramiteForm.reset();
                     switchView(viewReq);
                     modal.classList.add('show');
@@ -257,12 +249,11 @@
             });
         });
 
-        // 2. PASAR A LA VISTA 2: GENERACIÓN DINÁMICA DEL FORMULARIO
+        // 2. PASAR A LA VISTA 2 (FORMULARIO DINÁMICO)
         btnGoToForm.addEventListener('click', () => {
             const datos = infoTramites[currentTramiteId];
             if (!datos) return;
 
-            // Generar campos de texto extras si el trámite lo requiere
             dynamicFields.innerHTML = "";
             datos.camposExtras.forEach(campo => {
                 const div = document.createElement('div');
@@ -274,7 +265,6 @@
                 dynamicFields.appendChild(div);
             });
 
-            // Generar inputs para subir archivos estrictamente mapeados con los requisitos delegacionales
             fileUploadFields.innerHTML = "";
             datos.archivosRequeridos.forEach((fileLabel, index) => {
                 const div = document.createElement('div');
@@ -289,27 +279,20 @@
             switchView(viewForm);
         });
 
-        // 3. REGRESAR A REQUISITOS
         btnBackToReq.addEventListener('click', () => switchView(viewReq));
 
-        // 4. New
-        // ==========================================================================
-        // PROCESAR ENVÍO REAL HACIA GOOGLE SHEETS
-        // ==========================================================================
+        // 3. ENVÍO REAL HACIA GOOGLE SHEETS
         tramiteForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Detener recarga de página
+            e.preventDefault();
 
-            // 1. Efecto visual de carga en el botón
             const submitBtn = tramiteForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="bi bi-hourglass-split animate-spin"></i> Procesando expediente...';
             submitBtn.disabled = true;
 
-            // 2. Generación del folio institucional
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const folio = `MIRA-2026-${randomNum}`;
 
-            // 3. Recopilar campos dinámicos extras en una sola cadena de texto
             let detallesExtras = "";
             const datosConfig = infoTramites[currentTramiteId];
             datosConfig.camposExtras.forEach(campo => {
@@ -317,25 +300,21 @@
                 detallesExtras += `${campo.label} ${inputVal} | `;
             });
 
-            // 4. Leer la primera foto o PDF cargado por el ciudadano
             const fileInput = document.querySelector('input[type="file"]');
             
             if (fileInput && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
                 
-                // Convertir la imagen a formato de texto Base64 para poder transmitirla
                 reader.onload = function(event) {
                     const base64Data = event.target.result;
                     enviarAlBackend(folio, detallesExtras, file.name, base64Data);
                 };
                 reader.readAsDataURL(file);
             } else {
-                // Enviar sin archivos si el trámite no los requiriera
                 enviarAlBackend(folio, detallesExtras, null, null);
             }
 
-            // 5. Función de transmisión de datos por red
             function enviarAlBackend(folio, detalles, fileName, fileData) {
                 const payload = {
                     folio: folio,
@@ -348,23 +327,19 @@
                     fileData: fileData
                 };
 
-                // 🔴 REEMPLAZA ESTE TEXTO CON LA URL QUE COPIASTE EN EL PASO 2:
                 const GOOGLE_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwmSIiBhh6-666PiI3yanmpS8FY-d0zUhmAGd2FSNAJpRuf7d18t8CAce8U43mxDybM/exec";
 
                 fetch(GOOGLE_WEBAPP_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Evita problemas de restricciones CORS en servidores estáticos
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 })
                 .then(() => {
-                    // Carga exitosa: Mostrar folio oficial en la tercera vista del modal
                     document.getElementById('lblFolio').innerText = folio;
                     switchView(viewSuccess);
-                    
-                    // Restaurar botón
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                 })
@@ -377,24 +352,6 @@
             }
         });
 
-        // 4. PROCESAR SUBMIT (VISTA 3: ÉXITO Y FOLIO)
-
-
-        
-
-        
-        //tramiteForm.addEventListener('submit', (e) => {
-        //    e.preventDefault(); // Evita recarga
-
-            // Generador de folio institucional aleatorio con nomenclatura de Chalco-Miraflores
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            const folio = `MIRA-2026-${randomNum}`;
-            
-            document.getElementById('lblFolio').innerText = folio;
-            switchView(viewSuccess);
-        });
-
-        // Funciones de cierre habituales
         closeBtn.addEventListener('click', () => modal.classList.remove('show'));
         btnFinish.addEventListener('click', () => modal.classList.remove('show'));
         window.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
