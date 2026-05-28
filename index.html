@@ -12,8 +12,7 @@
     <header>
         <div class="header-container">
             <div class="logo-area">
-                <img src="personaje_vectorizado.svg" alt="Identidad Delegacional" class="logo-institucional">
-            
+                <img src="personaje_vectorizado.svg" alt="Identidad Cultural - Delegación Miraflores" class="logo-institucional">
                 <div class="logo-text">
                     <h2>Delegación Miraflores</h2>
                     <p>Municipio de Chalco</p>
@@ -31,17 +30,14 @@
 
     <section id="inicio" class="hero">
         <div class="hero-container">
-            
             <div class="hero-text">
                 <h1>Ventanilla Virtual de Atención Ciudadana</h1>
                 <p>Gestiona tus solicitudes, reportes y consultas de manera rápida y transparente sin salir de casa.</p>
                 <a href="#tramites" class="btn-primary">Ver Trámites Disponibles</a>
             </div>
-            
             <div class="hero-image">
                 <img src="personaje_vectorizado.svg" alt="Identidad Cultural - Delegación Miraflores">
             </div>
-
         </div>
     </section>
 
@@ -65,8 +61,8 @@
 
             <div class="card">
                 <div class="card-icon"><i class="bi bi-water"></i></div>
-                <h3>Conexión de drenaje</h3>
-                <p>Autorización delegacional para realizar de forma segura la infraestructura de conexión de tu predio particular a la red pública de drenaje sanitario.</p>
+                <h3>Conexión de Agua y Drenaje</h3>
+                <p>Autorización delegacional para realizar de forma segura la infraestructura de conexión de tu predio particular a la red pública de agua potable y drenaje sanitario.</p>
                 <button class="btn-secondary btn-tramite" data-id="drenaje">Iniciar trámite</button>
             </div>
 
@@ -83,21 +79,70 @@
     <div id="modalTramite" class="modal-overlay">
         <div class="modal-window">
             <span class="close-btn">&times;</span>
-            <div class="modal-header">
-                <h2 id="modalTitle">Nombre del Trámite</h2>
-            </div>
-            <div class="modal-body">
-                <h3>Requisitos obligatorios:</h3>
-                <ul id="modalRequirements">
-                    </ul>
-                <div class="download-box">
-                    <p><i class="bi bi-file-earmark-pdf-fill" style="color: #ef4444; margin-right: 5px;"></i> <strong>Formato oficial de solicitud:</strong></p>
-                    <a href="#" class="btn-download" id="btnDownloadPDF">Descargar Formato Solicitud (PDF)</a>
+            
+            <div id="viewRequirements" class="modal-view active">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Nombre del Trámite</h2>
+                </div>
+                <div class="modal-body">
+                    <h3>Requisitos obligatorios ordenados por la delegación:</h3>
+                    <ul id="modalRequirements"></ul>
+                    <div class="download-box">
+                        <p><i class="bi bi-file-earmark-pdf-fill" style="color: #ef4444; margin-right: 5px;"></i> <strong>Formato oficial de solicitud:</strong></p>
+                        <a href="#" class="btn-download" id="btnDownloadPDF">Descargar Formato Solicitud (PDF)</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" id="btnGoToForm">Siguiente paso <i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn-primary" onclick="alert('Próximamente: Aquí se habilitará el formulario digital.')">Siguiente paso</button>
+
+            <div id="viewForm" class="modal-view">
+                <div class="modal-header">
+                    <h2>Formulario de Solicitud Digital</h2>
+                    <p style="font-size: 0.85rem; color: #64748b;" id="formSubtitle">Trámite</p>
+                </div>
+                <form id="tramiteForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="formNombre">Nombre Completo del Solicitante *</label>
+                            <input type="text" id="formNombre" required placeholder="Ej. Juan Pérez López">
+                        </div>
+                        
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="formTelefono">Teléfono de Contacto *</label>
+                                <input type="tel" id="formTelefono" required placeholder="Ej. 5512345678">
+                            </div>
+                            <div class="form-group">
+                                <label for="formCorreo">Correo Electrónico *</label>
+                                <input type="email" id="formCorreo" required placeholder="Ej. juan@correo.com">
+                            </div>
+                        </div>
+
+                        <div id="dynamicFields"></div>
+
+                        <h3 class="form-section-title"><i class="bi bi-camera-fill"></i> Adjuntar Documentación (Fotos o PDF)</h3>
+                        <div id="fileUploadFields"></div>
+                    </div>
+                    <div class="modal-footer" style="gap: 1rem;">
+                        <button type="button" class="btn-secondary" id="btnBackToReq" style="width: auto;">Regresar</button>
+                        <button type="submit" class="btn-primary">Enviar Solicitud <i class="bi bi-send-fill"></i></button>
+                    </div>
+                </form>
             </div>
+
+            <div id="viewSuccess" class="modal-view text-center" style="padding: 1.5rem 0;">
+                <i class="bi bi-check-circle-fill" style="font-size: 4rem; color: #10b981;"></i>
+                <h2 style="color: #1e3a8a; margin-top: 1rem;">¡Solicitud Recibida!</h2>
+                <p style="color: #475569; margin-top: 0.5rem; font-size: 0.95rem;">Tu documentación ha sido enviada digitalmente a la delegación de Miraflores. Conserva tu número de folio oficial para el seguimiento de tu trámite:</p>
+                
+                <div class="folio-box" id="lblFolio">MIRA-2026-XXXX</div>
+                
+                <p style="font-size: 0.85rem; color: #64748b;"><i class="bi bi-info-circle"></i> Se te notificará vía correo o teléfono cuando tus documentos físicos estén listos para firma y recolección.</p>
+                <button type="button" class="btn-primary" id="btnFinish" style="margin-top: 1.5rem;">Finalizar</button>
+            </div>
+
         </div>
     </div>
 
@@ -109,73 +154,160 @@
     </footer>
 
     <script>
+        // REQUISITOS OFICIALES DE LA DELEGACIÓN MIRAFLORES
         const infoTramites = {
             domiciliaria: {
                 titulo: "Requisitos: Constancia Domiciliaria",
                 requisitos: [
                     "INE de quien la solicita.", 
-                    "Comprobante domiciliario vigente ( luz, agua, teléfono, predial, contrato de compra/venta).",
+                    "Comprobante domiciliario vigente (luz, agua, teléfono, predial, contrato de compra/venta).",
                     "Mencionar cuántos años lleva viviendo en el lugar y la edad cumplida." 
-                ]
+                ],
+                // Definimos qué inputs extras requiere esta opción
+                camposExtras: [
+                    { id: "yearsLiving", label: "¿Cuántos años lleva viviendo en el lugar? *", type: "number", placeholder: "Ej. 15", required: true },
+                    { id: "userAge", label: "Edad cumplida del solicitante *", type: "number", placeholder: "Ej. 43", required: true }
+                ],
+                // Qué archivos debe subir basados estrictamente en los requisitos que piden papel
+                archivosRequeridos: ["INE del Solicitante", "Comprobante Domiciliario Vigente"]
             },
             identidad: {
                 titulo: "Requisitos: Constancia de Identidad",
                 requisitos: [
-                     "INE de quien solicita.", 
-                     "Comprobante domiciliario.", 
-                     "Acta de nacimiento y Curp del menor de edad al que se le extenderá la constancia de identidad." 
-                ]
+                    "INE de quien solicita.", 
+                    "Comprobante domiciliario.", 
+                    "Acta de nacimiento y Curp del menor de edad al que se le extenderá la constancia de identidad." 
+                ],
+                camposExtras: [
+                    { id: "childName", label: "Nombre completo del menor de edad *", type: "text", placeholder: "Ej. Carlos Pérez Gómez", required: true }
+                ],
+                archivosRequeridos: ["INE del Tutor/Solicitante", "Comprobante Domiciliario", "Acta de Nacimiento del Menor", "CURP del Menor"]
             },
             drenaje: {
                 titulo: "Requisitos: Conexión de drenaje",
                 requisitos: [
                     "INE de la persona que lo solicita."
-                ]
+                ],
+                camposExtras: [],
+                archivosRequeridos: ["INE de la Persona Solicitante"]
             },
             inhumacion: {
                 titulo: "Requisitos: Permiso de Inhumación y Panteones",
                 requisitos: [
-
-                     "INE de la persona que falleció.", 
-                     "INE de la persona que solicita el permiso.", 
-                     "Acta de defunción expedida por el municipio de Chalco.", 
-                     "Acta de defunción que expide el médico o institución de salud que atendió a la persona." 
-                ]
+                    "INE de la persona que falleció.", 
+                    "INE de la persona que solicita el permiso.", 
+                    "Acta de defunción expedida por el municipio de Chalco.", 
+                    "Acta de defunción que expide el médico o institución de salud que atendió a la persona." 
+                ],
+                camposExtras: [],
+                archivosRequeridos: ["INE del Fallecido", "INE del Solicitante", "Acta de Defunción (Municipio de Chalco)", "Acta de Defunción (Médica/Institución)"]
             }
         };
 
+        let currentTramiteId = "";
+
+        // Elementos de la interfaz
         const modal = document.getElementById('modalTramite');
         const modalTitle = document.getElementById('modalTitle');
         const modalRequirements = document.getElementById('modalRequirements');
+        const formSubtitle = document.getElementById('formSubtitle');
+        const dynamicFields = document.getElementById('dynamicFields');
+        const fileUploadFields = document.getElementById('fileUploadFields');
+        const tramiteForm = document.getElementById('tramiteForm');
+        
+        // Elementos de Navegación de las Vistas
+        const viewReq = document.getElementById('viewRequirements');
+        const viewForm = document.getElementById('viewForm');
+        const viewSuccess = document.getElementById('viewSuccess');
+        
+        const btnGoToForm = document.getElementById('btnGoToForm');
+        const btnBackToReq = document.getElementById('btnBackToReq');
         const closeBtn = document.querySelector('.close-btn');
+        const btnFinish = document.getElementById('btnFinish');
 
+        // Función para cambiar de vista de forma limpia
+        function switchView(targetView) {
+            document.querySelectorAll('.modal-view').forEach(v => v.classList.remove('active'));
+            targetView.classList.add('active');
+        }
+
+        // 1. CONTROL DE APERTURA DEL MODAL Y CARGA DE DATOS DEL PASO 1
         document.querySelectorAll('.btn-tramite').forEach(button => {
             button.addEventListener('click', () => {
-                const tramiteId = button.getAttribute('data-id');
-                const datos = infoTramites[tramiteId];
+                currentTramiteId = button.getAttribute('data-id');
+                const datos = infoTramites[currentTramiteId];
 
                 if (datos) {
                     modalTitle.innerText = datos.titulo;
+                    formSubtitle.innerText = "Modalidad: " + datos.titulo;
+                    
+                    // Limpiar e inyectar requisitos oficiales
                     modalRequirements.innerHTML = "";
                     datos.requisitos.forEach(req => {
                         const li = document.createElement('li');
                         li.innerText = req;
                         modalRequirements.appendChild(li);
                     });
+
+                    // Resetear el formulario e ir a la vista 1
+                    tramiteForm.reset();
+                    switchView(viewReq);
                     modal.classList.add('show');
                 }
             });
         });
 
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('show');
+        // 2. PASAR A LA VISTA 2: GENERACIÓN DINÁMICA DEL FORMULARIO
+        btnGoToForm.addEventListener('click', () => {
+            const datos = infoTramites[currentTramiteId];
+            if (!datos) return;
+
+            // Generar campos de texto extras si el trámite lo requiere
+            dynamicFields.innerHTML = "";
+            datos.camposExtras.forEach(campo => {
+                const div = document.createElement('div');
+                div.className = 'form-group';
+                div.innerHTML = `
+                    <label for="${campo.id}">${campo.label}</label>
+                    <input type="${campo.type}" id="${campo.id}" ${campo.required ? 'required' : ''} placeholder="${campo.placeholder}">
+                `;
+                dynamicFields.appendChild(div);
+            });
+
+            // Generar inputs para subir archivos estrictamente mapeados con los requisitos delegacionales
+            fileUploadFields.innerHTML = "";
+            datos.archivosRequeridos.forEach((fileLabel, index) => {
+                const div = document.createElement('div');
+                div.className = 'file-input-group';
+                div.innerHTML = `
+                    <label><i class="bi bi-file-earmark-arrow-up"></i> ${fileLabel} *</label>
+                    <input type="file" required id="file_${index}" accept="image/*,.pdf">
+                `;
+                fileUploadFields.appendChild(div);
+            });
+
+            switchView(viewForm);
         });
 
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('show');
-            }
+        // 3. REGRESAR A REQUISITOS
+        btnBackToReq.addEventListener('click', () => switchView(viewReq));
+
+        // 4. PROCESAR SUBMIT (VISTA 3: ÉXITO Y FOLIO)
+        tramiteForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Evita recarga
+
+            // Generador de folio institucional aleatorio con nomenclatura de Chalco-Miraflores
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const folio = `MIRA-2026-${randomNum}`;
+            
+            document.getElementById('lblFolio').innerText = folio;
+            switchView(viewSuccess);
         });
+
+        // Funciones de cierre habituales
+        closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+        btnFinish.addEventListener('click', () => modal.classList.remove('show'));
+        window.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
     </script>
 </body>
 </html>
