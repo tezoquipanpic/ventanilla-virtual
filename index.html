@@ -57,7 +57,7 @@
             <div class="card">
                 <div class="card-icon"><i class="bi bi-person-badge-fill"></i></div>
                 <h3>Constancia de Identidad</h3>
-                <p>Certificación oficial que avala la identidad y rasgos físicos del solicitante, indispensable para personas que no cuentan con una identificación oficial vigente.</p>
+                <p>Constancia que expide la delegación para acreditar la identidad de una persona menor de edad, a solicitud de su madre, padre o tutor.</p>
                 <button class="btn-secondary btn-accion" data-id="identidad">Iniciar trámite</button>
             </div>
 
@@ -167,7 +167,7 @@
                         <div id="fileUploadFields"></div>
 
                         <div class="privacy-box" style="margin-top: 1.25rem; padding: 0.9rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.82rem; color: #475569; line-height: 1.45;">
-                            <p style="margin: 0 0 0.5rem 0;"><strong>Aviso de privacidad simplificado.</strong> Los datos y documentos que envíes por este formulario los recibe el responsable técnico del proyecto Ventanilla Digital de Miraflores, un proyecto de vinculación social desarrollado en colaboración con la Delegación Municipal de Miraflores, y se guardan en una hoja de cálculo de Google. Se usan únicamente para dar seguimiento a tu solicitud o reporte con la Delegación; no se usan con otros fines ni se comparten con terceros, y se conservan solo el tiempo necesario para atenderla. Puedes pedir que se corrijan o eliminen acudiendo a la ventanilla de la Delegación. Si prefieres no enviar documentos por este medio, puedes hacer tu trámite directamente en la ventanilla.</p>
+                            <p style="margin: 0 0 0.5rem 0;"><strong>Aviso de privacidad simplificado.</strong> Los datos que envíes por este formulario (y, en los reportes, la fotografía de evidencia) los recibe el responsable técnico del proyecto Ventanilla Digital de Miraflores, un proyecto de vinculación social desarrollado en colaboración con la Delegación Municipal de Miraflores, y se guardan en una hoja de cálculo de Google. Se usan únicamente para dar seguimiento a tu solicitud o reporte con la Delegación; no se usan con otros fines ni se comparten con terceros, y se conservan solo el tiempo necesario para atenderla. Puedes pedir que se corrijan o eliminen acudiendo a la ventanilla de la Delegación. Este formulario no recibe documentos de identificación: en los trámites, los documentos se presentan en la ventanilla. Si lo prefieres, puedes hacer todo el trámite o reporte directamente en la ventanilla.</p>
                             <label style="display: flex; gap: 0.5rem; align-items: flex-start; cursor: pointer;">
                                 <input type="checkbox" id="formPrivacidad" required style="margin-top: 0.2rem; width: auto;">
                                 <span>He leído el aviso de privacidad y acepto el envío de mis datos.</span>
@@ -183,12 +183,12 @@
 
             <div id="viewSuccess" class="modal-view text-center" style="padding: 1.5rem 0;">
                 <i class="bi bi-check-circle-fill" style="font-size: 4rem; color: #10b981;"></i>
-                <h2 style="color: #1e3a8a; margin-top: 1rem;">¡Registro Exitoso!</h2>
-                <p style="color: #475569; margin-top: 0.5rem; font-size: 0.95rem;" id="successMessageText">Tu solicitud ha sido enviada digitalmente a la delegación de Miraflores. Conserva tu número de folio oficial para el seguimiento de tu trámite:</p>
+                <h2 style="color: #1e3a8a; margin-top: 1rem;" id="successTitle">Solicitud enviada</h2>
+                <p style="color: #475569; margin-top: 0.5rem; font-size: 0.95rem;" id="successMessageText">Tu solicitud se envió. Anota este folio de referencia:</p>
                 
                 <div class="folio-box" id="lblFolio">MIRA-2026-XXXX</div>
                 
-                <p style="font-size: 0.85rem; color: #64748b;"><i class="bi bi-info-circle"></i> Se le dará un seguimiento inmediato y las cuadrillas correspondientes se asignarán a la brevedad.</p>
+                <p style="font-size: 0.85rem; color: #64748b;"><i class="bi bi-info-circle"></i> <span id="successNote">La recepción se confirma en la ventanilla de la delegación. Si no recibes respuesta, acude con tu folio.</span></p>
                 <button type="button" class="btn-primary" id="btnFinish" style="margin-top: 1.5rem;">Finalizar</button>
             </div>
 
@@ -197,8 +197,8 @@
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2026 Delegación Miraflores, Chalco. Proyecto de Vinculación Social.</p>
-            <p>Contacto: <a href="mailto:del.sanmateotezoquipan@gmail.com" style="color: inherit;">del.sanmateotezoquipan@gmail.com</a> | Horario: Lun - Vie 9:00 a 15:00 hrs</p>
+            <p>Ventanilla Digital de Miraflores · Proyecto de vinculación social en colaboración con la Delegación Municipal de Miraflores, Chalco.</p>
+            <p>Contacto: <a href="mailto:del.sanmateotezoquipan@gmail.com">del.sanmateotezoquipan@gmail.com</a> | Horario: Lun - Vie 9:00 a 15:00 hrs</p>
         </div>
     </footer>
 
@@ -218,7 +218,7 @@
                     { id: "yearsLiving", label: "¿Cuántos años lleva viviendo en el lugar? *", type: "number", placeholder: "Ej. 15", required: true },
                     { id: "userAge", label: "Edad cumplida del solicitante *", type: "number", placeholder: "Ej. 43", required: true }
                 ],
-                archivosRequeridos: ["INE del Solicitante", "Comprobante Domiciliario Vigente"]
+                archivosRequeridos: []
             },
             identidad: {
                 tipo: "tramite",
@@ -229,9 +229,9 @@
                     "Acta de nacimiento y Curp del menor de edad al que se le extenderá la constancia de identidad." 
                 ],
                 camposExtras: [
-                    { id: "childName", label: "Nombre completo del menor de edad *", type: "text", placeholder: "Ej. Carlos Pérez Gómez", required: true }
+                    { id: "childName", label: "Nombre completo del menor de edad *", type: "text", placeholder: "Ej. Carlos Pérez Gómez", required: true, minlength: 5, pattern: "[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' ]{5,}", title: "Escribe el nombre completo, solo con letras." }
                 ],
-                archivosRequeridos: ["INE del Tutor/Solicitante", "Comprobante Domiciliario", "Acta de Nacimiento del Menor", "CURP del Menor"]
+                archivosRequeridos: []
             },
             drenaje: {
                 tipo: "tramite",
@@ -240,7 +240,7 @@
                     "INE de la persona que lo solicita."
                 ],
                 camposExtras: [],
-                archivosRequeridos: ["INE de la Persona Solicitante"]
+                archivosRequeridos: []
             },
             inhumacion: {
                 tipo: "tramite",
@@ -252,7 +252,7 @@
                     "Acta de defunción que expide el médico o institución de salud que atendió a la persona." 
                 ],
                 camposExtras: [],
-                archivosRequeridos: ["INE del Fallecido", "INE del Solicitante", "Acta de Defunción (Municipio de Chalco)", "Acta de Defunción (Médica/Institución)"]
+                archivosRequeridos: []
             },
             // --- ATENCIÓN CIUDADANA (REPORTES) ---
             baches: {
@@ -266,7 +266,7 @@
             },
             luminarias: {
                 tipo: "reporte",
-                titulo: "Atención Ciudadana: Luminarias Defuctuosas",
+                titulo: "Atención Ciudadana: Reporte de Luminarias Defectuosas",
                 camposExtras: [
                     { id: "repPoste", label: "Dirección de la luminaria y número de poste (si cuenta con él) *", type: "text", placeholder: "Ej. Calle Aquiles Serdán, frente a la tienda de abarrotes, poste #4", required: true },
                     { id: "repFalla", label: "Tipo de falla en la luminaria *", type: "text", placeholder: "Ej. Totalmente apagada por las noches / Parpadea constantemente", required: true }
@@ -377,18 +377,22 @@
                 div.className = 'form-group';
                 div.innerHTML = `
                     <label for="${campo.id}">${campo.label}</label>
-                    <input type="${campo.type}" id="${campo.id}" ${campo.required ? 'required' : ''} placeholder="${campo.placeholder}">
+                    <input type="${campo.type}" id="${campo.id}" ${campo.required ? 'required' : ''} ${campo.pattern ? `pattern="${campo.pattern}"` : ''} ${campo.minlength ? `minlength="${campo.minlength}"` : ''} ${campo.title ? `title="${campo.title}"` : ''} ${campo.type === 'number' ? 'min="0"' : ''} placeholder="${campo.placeholder}">
                 `;
                 dynamicFields.appendChild(div);
             });
 
             fileUploadFields.innerHTML = "";
+            uploadTitleText.style.display = datos.archivosRequeridos.length ? "" : "none";
+            if (!datos.archivosRequeridos.length) {
+                fileUploadFields.innerHTML = '<p style="font-size: 0.9rem; color: #475569; margin-top: 1rem;"><i class="bi bi-info-circle"></i> Este formulario solo registra tu solicitud. Los documentos de la lista de requisitos se presentan en original en la ventanilla de la delegación.</p>';
+            }
             datos.archivosRequeridos.forEach((fileLabel, index) => {
                 const div = document.createElement('div');
                 div.className = 'file-input-group';
                 div.innerHTML = `
                     <label><i class="bi bi-file-earmark-arrow-up"></i> ${fileLabel} *</label>
-                    <input type="file" required id="file_${index}" accept="image/*,.pdf">
+                    <input type="file" required id="file_${index}" accept="image/*">
                 `;
                 fileUploadFields.appendChild(div);
             });
@@ -407,8 +411,12 @@
             submitBtn.innerHTML = '<i class="bi bi-hourglass-split animate-spin"></i> Procesando reporte...';
             submitBtn.disabled = true;
 
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            const folio = `MIRA-2026-${randomNum}`;
+            // Folio basado en fecha y hora, con sufijo aleatorio: no se repite entre envíos
+            const ahora = new Date();
+            const dosDig = n => String(n).padStart(2, '0');
+            const sello = `${ahora.getFullYear()}${dosDig(ahora.getMonth() + 1)}${dosDig(ahora.getDate())}-${dosDig(ahora.getHours())}${dosDig(ahora.getMinutes())}${dosDig(ahora.getSeconds())}`;
+            const sufijo = Math.random().toString(36).slice(2, 5).toUpperCase();
+            const folio = `MIRA-${sello}-${sufijo}`;
 
             let detallesExtras = "";
             datosConfig.camposExtras.forEach(campo => {
@@ -416,7 +424,14 @@
                 detallesExtras += `${campo.label} ${inputVal} | `;
             });
 
-            const fileInput = document.querySelector('input[type="file"]');
+            if (!navigator.onLine) {
+                alert('No hay conexión a internet. Revisa tu conexión o acude directamente a la ventanilla.');
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            const fileInput = fileUploadFields.querySelector('input[type="file"]');
             
             if (fileInput && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
@@ -453,11 +468,15 @@
                     body: JSON.stringify(payload)
                 })
                 .then(() => {
-                    // Configurar textos de éxito basados en el tipo
+                    // El navegador no puede leer la respuesta del servidor (modo no-cors),
+                    // por eso el mensaje informa el envío, no confirma el registro.
+                    const nombreCaso = datosConfig.titulo.replace(/^(Requisitos|Atención Ciudadana):\s*/, '');
                     if (datosConfig.tipo === "tramite") {
-                        document.getElementById('successMessageText').innerText = "Tu documentación ha sido enviada digitalmente a la delegación de Miraflores. Conserva tu número de folio oficial para el seguimiento de tu trámite:";
+                        document.getElementById('successTitle').innerText = "Solicitud enviada";
+                        document.getElementById('successMessageText').innerText = `Tu solicitud de ${nombreCaso} se envió a la Ventanilla Digital. Anota este folio de referencia y preséntalo en la ventanilla junto con tus documentos:`;
                     } else {
-                        document.getElementById('successMessageText').innerText = "El reporte de anomalía vial ha sido registrado con éxito en el mapa de atención de Miraflores. Las cuadrillas de obras públicas han sido notificadas con tu folio:";
+                        document.getElementById('successTitle').innerText = "Reporte enviado";
+                        document.getElementById('successMessageText').innerText = `Tu ${nombreCaso.charAt(0).toLowerCase() + nombreCaso.slice(1)} se envió a la Ventanilla Digital. Anota este folio de referencia:`;
                     }
 
                     document.getElementById('lblFolio').innerText = folio;
@@ -467,7 +486,7 @@
                 })
                 .catch(error => {
                     console.error('Error institucional:', error);
-                    alert('Hubo un inconveniente de conexión con la base de datos de la delegación. Intente nuevamente.');
+                    alert('No se pudo enviar tu solicitud. Intenta de nuevo más tarde o acude directamente a la ventanilla.');
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                 });
